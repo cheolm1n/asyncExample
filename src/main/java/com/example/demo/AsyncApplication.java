@@ -102,4 +102,15 @@ public class AsyncApplication {
 
         return result.map(str -> str.substring(0,4));
     }
+
+    @RequestMapping(path = "/syncMono", method = RequestMethod.GET)
+    public String getValueSyncUsingMono() {
+        log.info("@ Request received");
+
+        String result = webClient.get().uri("/asyncCompletable").retrieve().bodyToMono(String.class).block();
+
+        log.info("@ Servlet thread released");
+
+        return result.substring(0,4);
+    }
 }
