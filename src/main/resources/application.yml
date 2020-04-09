@@ -1,2 +1,5 @@
 server:
-  port: 8888
+  port: 18071
+management:
+  server:
+    port: 18072
