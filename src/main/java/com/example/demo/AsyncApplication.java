@@ -6,7 +6,6 @@ import java.util.concurrent.ForkJoinPool;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -101,7 +100,7 @@ public class AsyncApplication {
 
         log.info("@ Servlet thread released");
 
-        return result.map(str -> str.substring(0,4));
+        return result.map(str -> str.substring(0, 4));
     }
 
     @RequestMapping(path = "/syncMono", method = RequestMethod.GET)
@@ -112,11 +111,16 @@ public class AsyncApplication {
 
         log.info("@ Servlet thread released");
 
-        return result.substring(0,4);
+        return result.substring(0, 4);
     }
 
     @RequestMapping(path = "/mock", method = RequestMethod.GET)
-    public String mock() {
+    public String mockGet() {
+        return "OK";
+    }
+
+    @RequestMapping(path = "/mock", method = RequestMethod.POST)
+    public String mockPost() {
         return "OK";
     }
 }
