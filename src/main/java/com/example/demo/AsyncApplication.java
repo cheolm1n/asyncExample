@@ -24,7 +24,7 @@ public class AsyncApplication {
         SpringApplication.run(AsyncApplication.class, args);
     }
 
-    WebClient webClient = WebClient.create("http://localhost:8080");
+    WebClient webClient = WebClient.create("http://gap-qa-reward03.svr.kakaogames.io:8888");
 
     private String processRequest() {
         log.info("Start processing request");
@@ -122,5 +122,15 @@ public class AsyncApplication {
     @RequestMapping(path = "/mock", method = RequestMethod.POST)
     public String mockPost() {
         return "OK";
+    }
+
+    @RequestMapping(path = "/route", method = RequestMethod.GET)
+    public Mono<String> routeGet() {
+        return webClient.get().uri("/mock").retrieve().bodyToMono(String.class);
+    }
+
+    @RequestMapping(path = "/route", method = RequestMethod.POST)
+    public Mono<String> routePost() {
+        return webClient.post().uri("/mock").retrieve().bodyToMono(String.class);
     }
 }
