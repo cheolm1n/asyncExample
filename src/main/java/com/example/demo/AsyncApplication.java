@@ -115,12 +115,23 @@ public class AsyncApplication {
     }
 
     @RequestMapping(path = "/mock", method = RequestMethod.GET)
-    public String mockGet() {
-        return "OK";
+    public CompletableFuture<String> mockGet() {
+        return CompletableFuture
+                .supplyAsync(this::process);
     }
 
     @RequestMapping(path = "/mock", method = RequestMethod.POST)
-    public String mockPost() {
+    public CompletableFuture<String> mockPost() {
+        return CompletableFuture
+                .supplyAsync(this::process);
+    }
+
+    private String process() {
+        try {
+            Thread.sleep(100L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return "OK";
     }
 }
